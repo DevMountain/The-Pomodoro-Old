@@ -108,6 +108,9 @@
 }
 
 - (void)newRound:(NSNotification *)notification {
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(decreaseSecond) object:nil];
+    
     self.minutes = [notification.userInfo[UserInfoMinutesKey] integerValue];
     self.seconds = 0;
     
