@@ -3,7 +3,7 @@ The-Pomodoro
 
 An iOS pomodoro timer app including history.
 
-###Part 1: Tab Bar Controller
+##Part 1: Tab Bar Controller
 
 ###Step 1: Add a new ViewController as your root view controller
 - Add view controllers (Timer, History) to project
@@ -46,7 +46,16 @@ When a user selects a round, or when a round completes the current round notific
   - (void)endRound:(NSNotification *)notification
 - Add Timer view controller as observer of roundMinutes notification
   - (void)newRound:(NSNotification *)notification
-  
+
+##Part 2: Styling the Views
+
+###Step 6: Stylize the app
+- Update navigationBar color
+- Update navigationBar title font and text color
+- Update the tint color on the tab bar
+- Update the background color on the tab bar
+- Add images to the tableViewCells
+
 ###Black Diamond:
 - Allow the user to pause the button
 - The timer could constantly push what time it is, and the rounds have a label
