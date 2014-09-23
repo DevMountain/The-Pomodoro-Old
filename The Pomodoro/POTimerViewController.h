@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString * const RoundCompleteNotificationName = @"RoundCompleteNotification";
-
 @interface POTimerViewController : UIViewController
 
 @end

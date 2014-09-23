@@ -6,8 +6,11 @@
 //  Copyright (c) 2014 DevMountain. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
+
 #import "POTimerViewController.h"
 #import "PORoundsViewController.h"
+#import "POTimer.h"
 
 @interface POTimerViewController ()
 
@@ -15,11 +18,6 @@
 
 @property (nonatomic, strong) IBOutlet UILabel *timeLabel;
 @property (nonatomic, strong) IBOutlet UIButton *button;
-
-@property (nonatomic, assign) NSInteger minutes;
-@property (nonatomic, assign) NSInteger seconds;
-
-- (IBAction)startButton:(id)sender;
 
 @end
 
@@ -32,10 +30,13 @@
         [self registerForNotifications];
     }
     return self;
+    
 }
 
 - (void)registerForNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newRound:) name:NewRoundTimeNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLabel) name:SecondTickNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateButton) name:TimerCompleteNotification object:nil];
 }
 
 - (void)unregisterForNotifications {
@@ -54,71 +55,35 @@
     self.view.backgroundColor = [UIColor redColor];
     
     [self updateLabel];
+    
 }
 
-- (IBAction)startButton:(id)sender {
+- (IBAction)startTimer:(id)sender {
+    [[POTimer sharedInstance] startTimer];
     self.button.enabled = NO;
     [self.button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    self.active = YES;
-    [self performSelector:@selector(decreaseSecond) withObject:nil afterDelay:1.0];
 }
 
-- (void)decreaseSecond {
-    
-    if (self.seconds > 0) {
-        self.seconds--;
-    }
-
-    if (self.minutes > 0) {
-        if (self.seconds == 0) {
-            self.seconds = 59;
-            self.minutes--;
-        }
-    } else {
-        if (self.seconds == 0) {
-
-            // Re-enable the button
-            self.button.enabled = YES;
-            [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            
-            // Stop the timer
-            self.active = NO;
-            
-            // Post the notification that the round is complete
-            [[NSNotificationCenter defaultCenter] postNotificationName:RoundCompleteNotificationName object:nil userInfo:nil];
-            
-        }
-    }
-
+- (void)newRound:(NSNotification *)notification {    
     [self updateLabel];
-    
-    if (self.active) {
-        [self performSelector:@selector(decreaseSecond) withObject:nil afterDelay:1.0];
-    }
+    [self updateButton];
 }
 
 - (void)updateLabel {
-
-    if (self.seconds < 10) {
-        self.timeLabel.text = [NSString stringWithFormat:@"%d:0%d", self.minutes, self.seconds];
+    
+    if ([POTimer sharedInstance].seconds < 10) {
+        self.timeLabel.text = [NSString stringWithFormat:@"%ld:0%ld", (long)[POTimer sharedInstance].minutes, (long)[POTimer sharedInstance].seconds];
     } else {
-        self.timeLabel.text = [NSString stringWithFormat:@"%d:%d", self.minutes, self.seconds];
+        self.timeLabel.text = [NSString stringWithFormat:@"%ld:%ld", (long)[POTimer sharedInstance].minutes, (long)[POTimer sharedInstance].seconds];
     }
-
 }
 
-- (void)newRound:(NSNotification *)notification {
-    
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(decreaseSecond) object:nil];
-    
-    self.minutes = [notification.userInfo[UserInfoMinutesKey] integerValue];
-    self.seconds = 0;
+- (void)updateButton {
     
     // Re-enable the button
     self.button.enabled = YES;
     [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [self updateLabel];
 }
 
 @end
