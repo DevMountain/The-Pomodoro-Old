@@ -39,7 +39,7 @@ The Timer View Controller displays a countdown of the current round, and has a S
 - Subscribe your TimerViewController to run the updateLabel method on the SecondTickNotification.
  
 ###Step 3 (Choose One): Count down
-- Use the separate POTimer class to manage the timer. This timer class hold the minutes and seconds and has a method to begin counting down. 
+- Use the separate [POTimer](https://github.com/DevMountain/The-Pomodoro/blob/solution/The%20Pomodoro/POTimer.m) class to manage the timer. This timer class hold the minutes and seconds and has a method to begin counting down. 
 - Pay attention to what the class does for you, walk through each method, understand what it is doing.
 - Add a method to your TimerViewController to update the Timer Label.
 - Subscribe your TimerViewController to run the updateLabel method on the SecondTickNotification.
