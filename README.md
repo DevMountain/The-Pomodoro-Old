@@ -52,7 +52,7 @@ The Timer View Controller displays a countdown of the current round, and has a S
     - ```cancelTimer``` should turn ```isOn``` to NO
     - ```cancelTimer``` should cancel previous perform requests
   - Add a private method called ```endTimer```
-    - ```endTimer``` should turn ```isOn``` to NO and send a ```CurrentRoundNotification``` that the timer has finished
+    - ```endTimer``` should turn ```isOn``` to NO and send a ```RoundCompleteNotification``` that the timer has finished
   - Add a private method called ```decreaseSecond```
     - ```decreaseSecond``` should decrease one second from the remaining time and send a ```SecondTickNotification``` notification that one second passed
     - don't forget to change minutes, if necessary
