@@ -13,75 +13,84 @@ Remember, the solution code is here as a resource. Do not copy and paste. Unders
 ##Part 1: Tab Bar Controller
 
 ###Step 1: Initialize and Add the UITabBarController as the RootViewController
-- Add view controllers (TimerViewController, RoundsViewController) to project (include a XIB for the TimerViewController)
-- Initialize the TimerViewController and RoundsViewController
-- Set each viewcontroller's tabBarItem.title and tabBarItem.image (find two fitting icons on icons8.com, import them into the Images.xcassets file)
+- Add view controllers (```TimerViewController```, ```RoundsViewController```) to project (include a XIB for the ```TimerViewController```)
+- In the app delegate, initialize the ```TimerViewController``` and ```RoundsViewController```
+- Set each viewcontroller's ```tabBarItem.title``` and ```tabBarItem.image``` (find two fitting icons on icons8.com, import them into the Images.xcassets file)
 - Initialize a UITabBarController
-- Set the viewControllers property on the UITabBarController to an array of your TimerViewController and RoundsViewController instances
-- Set the tab bar controller as root viewcontroller of window
+- Set the ```viewControllers``` property on the UITabBarController to an array of your ```TimerViewController``` and ```RoundsViewController``` instances
+- Set the tab bar controller as ```rootViewController``` of ```window```
 
 ###Part 2: The Timer App Overview
 
 The classes within our app are going to talk to each other with NSNotifications. 
 
-- When each second passes it will post a notification named "SecondTickNotification". 
-- When the timer runs out of time it will post a notification named "RoundCompleteNotification".  
-- The round needs to post a "CurrentRoundNotification" that tells the rest of the app what round is starting. 
-- When a user selects a round, or when a round completes the current round notification should trigger 
+- When each second passes it will post a notification named ```SecondTickNotification```. 
+- When the timer runs out of time it will post a notification named ```RoundCompleteNotification```.  
+- The round needs to post a ```CurrentRoundNotification``` that tells the rest of the app what round is starting. 
+- When a user selects a round, or when a round completes the ```CurrentRoundNotification``` should trigger 
 
 ###Step 2: Add the interface to the TimerViewController
 
 The Timer View Controller displays a countdown of the current round, and has a Start button to start the timer.
 
 - Add a label and button to the timer screen using a XIB
-- Add IBOutlets for the button and label
-- Add an IBAction for the button that will trigger the timer
+- Add IBOutlets for the ```timerButton``` and ```timerLabel```
+- Add an IBAction for the ```timerButton``` that will trigger the timer
   - note: We need to disable the button while the timer is going.
-  
-###Step 3 (Choose One): Count down
-- In the action method you need to use the method performSelector:afterDelay: to count down the seconds.
-- You'll need to store the seconds and minutes and decrease the time by a second each time the method gets called.
-- When seconds and minutes are zero post the notification.
-- Subscribe your TimerViewController to run the updateLabel method on the SecondTickNotification.
  
-###Step 3 (Choose One): Count down
+###Step 3: Count down
 - Use a separate [POTimer](https://github.com/DevMountain/The-Pomodoro/blob/solution/The%20Pomodoro/POTimer.m) class to manage the timer. This timer class hold the minutes and seconds and has a method to begin counting down. 
 - Pay attention to what the class does for you, walk through each method, understand what it is doing.
 - Write your own timer class:
-  - Create a POTimer Class as a Shared Instance
-  - Add NSInteger properties for minutes and seconds
-  - Add a private BOOL property called 'on' to allow you to check if the timer is active
-  - Add a public method called startTimer
-    - startTimer should turn 'on' to TRUE
-  - Add a public method called cancelTimer
-    - cancelTimer should turn 'on' to FALSE
-  - Add a private method called endTimer
-    - endTimer should turn 'on' to FALSE and send a notification that the timer has finished
-  - Add a method called decreaseSecond
-    - decreaseSecond should decrease one second from the remaining time and send a notification that one second passed
-  - Add a method called checkActive
-    - checkActive should check if the timer is on, and if so, call the decreaseSecond method, then it should call itself in one second
-
-- Add a method to your TimerViewController to update the Timer Label.
-- Subscribe your TimerViewController to run the updateLabel method on the SecondTickNotification.
+  - Create a ```POTimer``` Class as a Shared Instance
+  - Add NSInteger properties for ```minutes``` and ```seconds```
+  - Add a private BOOL property called ```isOn``` to allow you to check if the timer is active
+  - Add a public method called ```startTimer```
+    - ```startTimer``` should turn ```isOn``` to YES
+    - ```startTimer``` should call ```isActive``` (which you will write below)
+  - Add a public method called ```cancelTimer```
+    - ```cancelTimer``` should turn ```isOn``` to NO
+    - ```cancelTimer``` should cancel previous perform requests
+  - Add a private method called ```endTimer```
+    - ```endTimer``` should turn ```isOn``` to NO and send a ```CurrentRoundNotification``` that the timer has finished
+  - Add a private method called ```decreaseSecond```
+    - ```decreaseSecond``` should decrease one second from the remaining time and send a ```SecondTickNotification``` notification that one second passed
+    - don't forget to change minutes, if necessary
+    - if the timer has elpased, then call ```endTimer```
+  - Add a private method called ```isActive```
+    - ```isActive``` should check if the timer is on (```self.isOn```), and if so, call the ```decreaseSecond``` method, then it should call itself in one second
+- Add a method to your ```TimerViewController``` to update the Timer Label.
+- Subscribe your ```TimerViewController``` to run the update label method on the ```SecondTickNotification```.
+  - ```registerForNotifications``` should be placed in a custom init method. 
 
 ###Step 4: Add a tableview and datasource methods to the rounds view controller
-- Create a tableview property on the RoundsViewController and instantiate it
-- Add the tableview to the viewcontrollers view
-- set self as datasource and delegate
-- Add a method that returns a static array of times for each round (25-5-25-5-25-5-25-15)
+- Add a property ```currentRound``` of type NSInteger on ```RoundsViewController```
+- Create a ```tableView``` property on the ```RoundsViewController``` and instantiate it
+- set ```self``` as datasource and delegate of ```tableView```
+- Add the ```tableView``` to the ```RoundsViewController```'s ```view```
+- Add a method that returns a static array of times for each round  
+  - ```@[@25, @5, @25, @5, @25, @5, @25, @15];```
 - Add datasource methods to display cells that the user can use to select which round they want to start
-- Add a method that will send a postMinutes notification
-- Post the postMinutes notification
-- Add didSelectRowAtIndexPath to change currentRound, reload data on the table view, and post minutes for the timer class to update the label on the TimerViewController
+- Add a method ```roundSelected```
+  - that will update the minutes and seconds on the ```[POTimer sharedInstance]``` from the ```currentRound``` property
+  - that will send a ```CurrentRoundNotification``` notification
+- Add didSelectRowAtIndexPath
+  - set the ```currentRound``` property to the indexPath   
+  - and call ```roundSelected```
 
 ###Step 5: Add observer notifications
-- Add RoundViewController as observer of finished notification
-  - (void)endRound:(NSNotification *)notification
-- Add TimerViewController as observer of roundMinutes notification
-  - (void)newRound:(NSNotification *)notification
+- Add RoundViewController as observer of ```RoundCompleteNotification```
+  - ```-(void)roundComplete```
+    - if the current round is not the last round 
+      - increment the ```currentRounds``` property
+      - select the correct row on the tableview
+      - call ```roundSelected```
+- Add TimerViewController as observer of ```CurrentRoundNotification``` notification
+  - ```-(void)newRound```
+    - update ```timerLabel```
+    - enable ```timerButton```
 
-##Part 2: Styling the Views
+##Part 3: Styling the Views
 
 ###Step 6: Stylize the app
 - Update navigationBar color
