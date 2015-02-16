@@ -39,7 +39,7 @@ The Timer View Controller displays a countdown of the current round, and has a S
   - note: We need to disable the button while the timer is going.
  
 ###Step 3: Count down
-- Use a separate [POTimer](https://github.com/DevMountain/The-Pomodoro/blob/solution/The%20Pomodoro/POTimer.m) class to manage the timer. This timer class hold the minutes and seconds and has a method to begin counting down. 
+- Use a separate [POTimer](https://github.com/DevMountain/The-Pomodoro/blob/solution/The%20Pomodoro/POTimer.m) class to manage the timer. This timer class holds the minutes and seconds and has a method to begin counting down. 
 - Pay attention to what the class does for you, walk through each method, understand what it is doing.
 - Write your own timer class:
   - Create a ```POTimer``` Class as a Shared Instance
