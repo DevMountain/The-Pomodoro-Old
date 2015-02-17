@@ -9,6 +9,7 @@
 #import "POAppDelegate.h"
 #import "POTimerViewController.h"
 #import "PORoundsViewController.h"
+#import "POAppearanceController.h"
 
 
 @implementation POAppDelegate
@@ -28,14 +29,8 @@
     UITabBarController *tabBarController = [UITabBarController new];
     tabBarController.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:historyViewController], [[UINavigationController alloc] initWithRootViewController:timerViewController]];
     
-    [[UINavigationBar appearance] setBarTintColor:[UIColor redColor]];
-    [[UITabBar appearance] setTintColor:[UIColor redColor]];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{
-                                                           NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                           NSFontAttributeName: [UIFont fontWithName:@"Avenir-Light" size:20]
-                                                           }];
-        
+    [POAppearanceController initializeAppearanceDefaults];
+    
     self.window.rootViewController = tabBarController;
     
     // Override point for customization after application launch.

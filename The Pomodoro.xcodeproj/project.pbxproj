@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6813DFDF1A9392500061417C /* POAppearanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6813DFDE1A9392500061417C /* POAppearanceController.m */; };
 		7141B2E6193DBDFD0084F9F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7141B2E5193DBDFD0084F9F1 /* Foundation.framework */; };
 		7141B2E8193DBDFD0084F9F1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7141B2E7193DBDFD0084F9F1 /* CoreGraphics.framework */; };
 		7141B2EA193DBDFD0084F9F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7141B2E9193DBDFD0084F9F1 /* UIKit.framework */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6813DFDD1A9392500061417C /* POAppearanceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POAppearanceController.h; sourceTree = "<group>"; };
+		6813DFDE1A9392500061417C /* POAppearanceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POAppearanceController.m; sourceTree = "<group>"; };
 		7141B2E2193DBDFD0084F9F1 /* The Pomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Pomodoro.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7141B2E5193DBDFD0084F9F1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7141B2E7193DBDFD0084F9F1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -125,6 +128,8 @@
 			children = (
 				7141B2F4193DBDFD0084F9F1 /* POAppDelegate.h */,
 				7141B2F5193DBDFD0084F9F1 /* POAppDelegate.m */,
+				6813DFDD1A9392500061417C /* POAppearanceController.h */,
+				6813DFDE1A9392500061417C /* POAppearanceController.m */,
 				7141B31C193DC26A0084F9F1 /* POTimerViewController.h */,
 				7141B31D193DC26A0084F9F1 /* POTimerViewController.m */,
 				7141B31E193DC26A0084F9F1 /* POTimerViewController.xib */,
@@ -274,6 +279,7 @@
 				717AB32819D2201000E795AE /* PORoundTableViewDataSource.m in Sources */,
 				7141B2F6193DBDFD0084F9F1 /* POAppDelegate.m in Sources */,
 				717AB32B19D226A600E795AE /* POTimer.m in Sources */,
+				6813DFDF1A9392500061417C /* POAppearanceController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
