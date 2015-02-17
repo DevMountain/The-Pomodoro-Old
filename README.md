@@ -93,10 +93,13 @@ The Timer View Controller displays a countdown of the current round, and has a S
 ##Part 3: Styling the Views
 
 ###Step 6: Stylize the app
+- Create an ```AppearanceController``` object
+- Add a class method to ```initializeAppearanceDefaults```
 - Update navigationBar color
 - Update navigationBar title font and text color
 - Update the tint color on the tab bar
 - Update the background color on the tab bar
+- Import the ```AppearanceController``` and call the method in the ```AppDelegate```
 - Add images to the tableViewCells
 
 ###Black Diamond:
